@@ -12,7 +12,45 @@ export class TodoService {
       const result = new this.todoModel(data);
       return await result.save();
     } catch (error) {
-        throw error
+      throw error;
+    }
+  }
+
+  async getAll(): Promise<Todo[]> {
+    try {
+      const data = await this.todoModel.find();
+      if (!data) {
+        throw new Error("No data");
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteTodo(id: string): Promise<Todo> {
+    try {
+      const data = await this.todoModel.findByIdAndDelete(id);
+      if (!data) {
+        throw new Error("error in deletion");
+      }
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateTodo(id: string, upDate: todo): Promise<Todo> {
+    try {
+      const data = await this.todoModel.findByIdAndUpdate(id, upDate, {
+        new: true,
+      });
+      if (!data) {
+        throw new Error("can't update");
+      }
+      return data;
+    } catch (error) {
+      throw error;
     }
   }
 }
